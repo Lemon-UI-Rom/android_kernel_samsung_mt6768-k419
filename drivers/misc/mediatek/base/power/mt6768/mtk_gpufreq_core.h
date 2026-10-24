@@ -10,8 +10,8 @@
  * MT6768/MT6767 : GPU DVFS OPP table Setting
  **************************************************/
 #ifdef CONFIG_SLM_OC_GPU
-/* slm oc 1.15ghz 1.235v */
-#define SEG_GPU_DVFS_FREQ0			(1150000)	/* KHz */
+/*  lemon+slm oc 1.262ghz 1.235v */
+#define SEG_GPU_DVFS_FREQ0			(1262000)	/* KHz */
 #define SEG_GPU_DVFS_FREQ1			(1125000)	/* KHz */
 #define SEG_GPU_DVFS_FREQ2			(1100000)	/* KHz */
 #define SEG_GPU_DVFS_FREQ3			(1075000)	/* KHz */

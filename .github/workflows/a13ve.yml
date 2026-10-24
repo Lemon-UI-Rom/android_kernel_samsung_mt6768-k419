@@ -22,19 +22,27 @@ jobs:
       # -----------------------------------------------------------------------
       # CACHING: Saves time by not re-downloading Clang every run
       # -----------------------------------------------------------------------
-      - name: Cache Proton Clang
+      - name: Cache AOSP Clang
         id: cache-clang
         uses: actions/cache@v4
         with:
           path: ~/toolchains/clang
-          key: ${{ runner.os }}-proton-clang-v1
+          key: ${{ runner.os }}-aosp-clang-r596125-v1
 
-      - name: Setup Proton Clang
+      - name: Setup AOSP Clang r596125
         if: steps.cache-clang.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/toolchains
-          echo "Cloning Proton Clang..."
-          git clone https://github.com/kdrag0n/proton-clang.git --depth=1 ~/toolchains/clang
+          mkdir -p ~/toolchains/clang
+          echo "Downloading Clang r596125..."
+          wget -q --show-progress -O /tmp/clang.tar.gz \
+            "https://github.com/ashleypixie/Mirror-Source-Clang22-Prebuilt/releases/download/clang-22-r596125/clang-r596125.tar.gz"
+          tar -xzf /tmp/clang.tar.gz -C ~/toolchains/clang
+          rm -f /tmp/clang.tar.gz
+
+      - name: Add Clang to PATH
+        run: |
+          echo "$HOME/toolchains/clang/bin" >> $GITHUB_PATH
+          "$HOME/toolchains/clang/bin/clang" --version
 
       # -----------------------------------------------------------------------
       # DEPENDENCIES: Standard build tools required by kernel.mk
